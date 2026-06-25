@@ -8,11 +8,14 @@ A Python implementation of European option pricing using the Black–Scholes mod
 
 ### What does this do?
 
-This project prices European call and put options two ways — analytically via the Black–Scholes formula, and numerically via Monte Carlo simulation — then validates that both methods agree. It runs the simulation across thousands of paths, measures how precisely each method recovers the closed-form price, and benchmarks four estimators (naive MC, antithetic variates, control variates, and a combined approach) against each other.
+This project prices European call and put options two ways — analytically via the Black–Scholes formula, and numerically via Monte Carlo simulation. It then validates that both methods agree. It runs the simulation across thousands of paths, measures how precisely each method recovers the closed-form price, and benchmarks four estimators (naive MC, antithetic variates, control variates, and a combined approach) against each other.
 
 ### Purpose
 
-The goal is to build a ground-up understanding of how derivatives are priced in practice. Starting from the Black–Scholes formula gives the exact theoretical answer; implementing Monte Carlo shows how that same answer is approximated numerically when no closed form exists (as is the case for most exotic options). The variance reduction work addresses a core challenge in quantitative finance: simulation is expensive, so understanding how to extract more precision from fewer paths has direct practical value. The Greeks analysis develops intuition for how an option's risk profile shifts with market conditions — the foundation of any hedging strategy.
+The goal is to build an understanding of how derivatives are priced in practice. 
+The Black–Scholes formula gives the exact theoretical answer; implementing Monte Carlo shows how that same answer is approximated numerically when no closed form exists (as is the case for most exotic options). 
+The variance reduction work addresses a core challenge in quantitative finance: simulation is expensive, so understanding how to extract more precision from fewer paths has direct practical value. 
+The Greeks analysis develops intuition for how an option's risk profile shifts with market conditions — the foundation of any hedging strategy.
 
 **Parameters used throughout:**
 
@@ -32,7 +35,7 @@ The goal is to build a ground-up understanding of how derivatives are priced in 
 
 Stock prices are modeled as a continuous-time stochastic process where the log-return over any period is normally distributed. Under the risk-neutral measure Q:
 
-$$dS_t = r \, S_t \, dt + \sigma \, S_t \, dW_t$$
+$$dS_t = r \cdot S_t \cdot dt + \sigma \cdot S_t \cdot dW_t$$
 
 This gives the exact terminal price:
 
@@ -47,10 +50,10 @@ For a European option, only the terminal price $S_T$ matters — so a single nor
 BSM gives a closed-form solution for European option prices under the assumption that the stock follows GBM with constant volatility and no dividends.
 
 **Call price:**
-$$C = S_0 \, N(d_1) - K e^{-rT} N(d_2)$$
+$$C = S_0 \cdot N(d_1) - K e^{-rT} N(d_2)$$
 
 **Put price:**
-$$P = K e^{-rT} N(-d_2) - S_0 \, N(-d_1)$$
+$$P = K e^{-rT} N(-d_2) - S_0 \cdot N(-d_1)$$
 
 where:
 $$d_1 = \frac{\ln(S_0/K) + (r + \frac{1}{2}\sigma^2)T}{\sigma\sqrt{T}}, \qquad d_2 = d_1 - \sigma\sqrt{T}$$
